@@ -24,6 +24,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="Info.json" CopyToOutputDirectory="PreserveNewest" />
+		<EmbeddedResource Include="LocalizedStrings.json" />
 	</ItemGroup>
 	<Target Name="ILRepack" AfterTargets="Build">
 		<ItemGroup>
@@ -34,9 +35,6 @@
 		<Message Text="Merging: @(InputAssemblies) into @(OutputAssembly)" Importance="High" />
 		<ILRepack OutputType="Dll" MainAssembly="@(OutputAssembly)" OutputAssembly="@(OutputAssembly)" InputAssemblies="@(InputAssemblies)" WorkingDirectory="$(OutputPath)" />
 	</Target>
-	<ItemGroup>
-		<EmbeddedResource Include="LocalizedStrings.json" />
-	</ItemGroup>
 	<Target Name="Deploy" AfterTargets="ILRepack">
 		<ItemGroup>
 			<Files Include="$(TargetDir)\**\*.*" />
