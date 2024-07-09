@@ -1,0 +1,12 @@
+﻿{
+  "AssemblyName": "DexCarn.dll",
+  "Author": "",
+  "DisplayName": "Dextrous Carnage",
+  "EntryMethod": "DexCarn.Main.Load",
+  "HomePage": "",
+  "Id": "DexCarn",
+  "ManagerVersion": "0.27.11",
+  "Repository": "",
+  "Requirements": [],
+  "Version": "1.0.0a"
+}
