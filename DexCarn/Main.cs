@@ -12,6 +12,7 @@ using BlueprintCore.Blueprints.References;
 using BlueprintCore.Blueprints.CustomConfigurators.Classes;
 using Kingmaker.Blueprints;
 using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
+using Kingmaker.Blueprints.Classes.Prerequisites;
 
 namespace DexCarn
 {
@@ -87,8 +88,7 @@ namespace DexCarn
         public static void Configure()
         {
             var DextrousCarnage = FeatureConfigurator.New("Dextrous Carnage", "524D86A7-819B-4E4D-9C4F-A27975974E10")
-                                                     .CopyFrom(FeatureRefs.DreadfulCarnage)
-                                                     .ClearIsPrerequisiteFor()
+                                                     .CopyFrom(FeatureRefs.DreadfulCarnage, c => c is not (PrerequisiteStatValue or PrerequisiteFeature))
 //                                                     .SetDisplayName("DextrousCarnage.Name")
 //                                                     .SetDescription("DextrousCarnage.Disc")
                                                      .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.Dexterity, 15)
