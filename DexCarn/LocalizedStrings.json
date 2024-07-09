@@ -7,6 +7,7 @@
 
   {
     "Key": "DextrousCarnage.Disc",
+    "ProcessTemplates": false,
     "enGB": "The ease with which you dispatch their companions strikes fear into the hearts of your opponents.//nBenefit: Whenever you reduce an enemy to 0 or fewer {g|Encyclopedia:HP}hit points{/g}, you can make a {g|Encyclopedia:Persuasion}Persuasion{/g} (to intimidate) {g|Encyclopedia:Check}check{/g} to demoralize all enemies within 30 feet as a {g|Encyclopedia:Free_Action}free action{/g}. Enemies that cannot see both you and the enemy you reduced to 0 or fewer hit points are unaffected."
   }
 ]
