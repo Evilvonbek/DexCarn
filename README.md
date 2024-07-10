@@ -10,3 +10,10 @@ Prerequisites are now :
 No weird behaviour ( hopefully ) and nothing needing set, just plug and slay.
 
 Special Thanks as usual to Balkoth, Kuru, Cascade and everyone else for putting up with my dumb penguin brainmush and catching my mistakes and also VS doing dumb things.
+
+Changelog : 
+
+1.1.1 :
+
+- Added Prerequisite info to Piranha Strike
+- Added Prerequisite info to Dazzling Display
