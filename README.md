@@ -2,7 +2,9 @@ Simple Rework of Deadly Carnage to allow Dex based Characters to have access to 
 
 Prerequisites are now :
 
-Dex 15              ( changed from Str )
-Piranha Strike      ( change from Power attack )
-Dazzling Display    ( unchanged )
-BAB 11              ( unchanged ) 
+- Dex 15              ( changed from Str )
+- Piranha Strike      ( change from Power attack )
+- Dazzling Display    ( unchanged )
+- BAB 11              ( unchanged ) 
+
+No weird behaviour ( hopefully ) and nothing needing set, just plug and slay.
