@@ -1,12 +1,12 @@
 ﻿{
   "AssemblyName": "DexCarn.dll",
-  "Author": "",
+  "Author": "Madlampy",
   "DisplayName": "Dextrous Carnage",
   "EntryMethod": "DexCarn.Main.Load",
-  "HomePage": "",
+  "HomePage": "https://github.com/Evilvonbek/DexCarn",
   "Id": "DexCarn",
   "ManagerVersion": "0.27.11",
-  "Repository": "",
+  "Repository": "https://github.com/Evilvonbek/DexCarn/blob/master/Repository.json",
   "Requirements": [],
-  "Version": "1.0.0a"
+  "Version": "1.1.0"
 }
