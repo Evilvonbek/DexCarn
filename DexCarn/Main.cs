@@ -96,6 +96,15 @@ namespace DexCarn
                                                      .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
                                                      .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.BaseAttackBonus, 11)
                                                      .Configure();
+
+            FeatureConfigurator.For(FeatureRefs.PiranhaStrikeFeature)
+                .AddToIsPrerequisiteFor(DextrousCarnage)
+                .Configure();
+
+            FeatureConfigurator.For(FeatureRefs.DazzlingDisplayFeature)
+                .AddToIsPrerequisiteFor(DextrousCarnage)
+                .Configure();
+
         }
     }
 
