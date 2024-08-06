@@ -1,18 +1,20 @@
 ﻿using HarmonyLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
 using UnityModManagerNet;
 using Kingmaker.Blueprints.JsonSystem;
 using BlueprintCore.Utils;
 using BlueprintCore.Blueprints.References;
 using BlueprintCore.Blueprints.CustomConfigurators.Classes;
-using Kingmaker.Blueprints;
-using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
 using Kingmaker.Blueprints.Classes.Prerequisites;
+using Kingmaker.UnitLogic.Mechanics.Components;
+using Kingmaker.Designers.Mechanics.Recommendations;
+using BlueprintCore.Actions.Builder;
+using BlueprintCore.Conditions.Builder;
+using BlueprintCore.Conditions.Builder.ContextEx;
+using BlueprintCore.Actions.Builder.BasicEx;
+using Kingmaker.Enums;
+using Kingmaker.Blueprints.Items.Weapons;
 
 namespace DexCarn
 {
@@ -103,6 +105,60 @@ namespace DexCarn
 
             FeatureConfigurator.For(FeatureRefs.DazzlingDisplayFeature)
                 .AddToIsPrerequisiteFor(DextrousCarnage)
+                .Configure();
+
+        }
+    }
+
+    class DexDespair
+    {
+        public static void Configure()
+        {
+            var DexDespair = FeatureConfigurator.New("DexDespair", "524D86A7-819B-4E4D-9C4F-A27975974E11")
+                                                     .CopyFrom(FeatureRefs.CornugonSmash, c => c is not (PrerequisiteStatValue or PrerequisiteFeature or AddInitiatorAttackWithWeaponTrigger or RecommendationHasFeature))
+                                                     .SetDisplayName(LocalizationTool.GetString("DexDespair.Name"))
+                                                     .SetDescription(LocalizationTool.GetString("DexDespair.Disc"))
+                                                     .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
+                                                     .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.SkillPersuasion, 6)
+                                                     .AddInitiatorAttackWithWeaponTrigger(ActionsBuilder.New()
+                                                          .Conditional(
+                                                              ConditionsBuilder.New().CasterHasFact(BuffRefs.PiranhaStrikeBuff.Reference.Get()),
+                                                          ifTrue: ActionsBuilder.New().MeleeAttack()).Build(),
+                                                          TriggerBeforeAttack : false,
+                                                          OnlyHit : true,
+                                                          OnMiss : false,
+                                                          OnlyOnFullAttack : false,
+                                                          OnlyOnFirstAttack : false,
+                                                          OnlyOnFirstHit : false,
+                                                          CriticalHit : false,
+                                                          OnlyNatural20 : false,
+                                                          OnAttackOfOpportunity : false,
+                                                          NotCriticalHit : false,
+                                                          OnlySneakAttack : false,
+                                                          NotSneakAttack : false,
+                                                          m_WeaponType : null,
+                                                          CheckWeaponCategory : false,
+                                                          Category : WeaponCategory.UnarmedStrike,
+                                                      CheckWeaponGroup : false,
+                                                      WeaponFighterGroup : weaponfightergroup.None,
+                                                          CheckWeaponRangeType : true,
+                                                          RangeType: WeaponRangeType.MeleeNormal,
+                                                          CheckPhysicalDamageForm : false,
+                                                          DamageForm : 0,
+                                                          ReduceHPToZero : false,
+                                                          DamageMoreTargetMaxHP : false,
+                                                          CheckDistance : false,
+                                                          DistanceLessEqual: 0.0,
+                                                          AllNaturalAndUnarmed: false,
+                                                          DuelistWeapon: false,
+                                                          NotExtraAttack : false,
+                                                          OnCharge : false,
+                                                          IgnoreAutoHit : false,
+                                                          ActionsOnInitiator : false)
+                                                     .Configure();
+
+            FeatureConfigurator.For(FeatureRefs.PiranhaStrikeFeature)
+                .AddToIsPrerequisiteFor(DexDespair)
                 .Configure();
 
         }

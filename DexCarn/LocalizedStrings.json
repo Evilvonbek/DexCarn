@@ -9,5 +9,16 @@
     "Key": "DextrousCarnage.Disc",
     "ProcessTemplates": true,
     "enGB": "The ease with which you dispatch their companion strikes fear into the hearts of your opponents.\nBenefit: Whenever you reduce an enemy to 0 or fewer {g|Encyclopedia:HP}hit points{/g}, you can make a {g|Encyclopedia:Persuasion}Persuasion{/g} (to intimidate) {g|Encyclopedia:Check}check{/g} to demoralize all enemies within 30 feet as a {g|Encyclopedia:Free_Action}free action{/g}.\nEnemies that cannot see both you and the enemy you reduced to 0 or fewer hit points are unaffected."
+  },
+  {
+    "Key": "DexDespair.Name",
+    "ProcessTemplates": false,
+    "enGB": "Despair of a Hundred Cuts"
+  },
+
+  {
+    "Key": "DexDespair.Disc",
+    "ProcessTemplates": true,
+    "enGB": "As you slowly disable your oppoent with clinical precision their spirit begins to crumble.\nBenefit: When you {g|Encyclopedia:Damage}damage{/g} an opponent with a Piranha Strike, you may make an immediate {g|Encyclopedia:Persuasion}Persuasion{/g} (intimidate) {g|Encyclopedia:Check}check{/g} as a {g|Encyclopedia:Free_Action}free action{/g} to attempt to demoralize your opponent."
   }
 ]

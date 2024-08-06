@@ -4,8 +4,8 @@
 	<PropertyGroup>
 		<TargetFramework>net48</TargetFramework>
 		<AssemblyName>DexCarn</AssemblyName>
-		<Description>Dextrous Carnage</Description>
-		<Version>1.1.1</Version>
+		<Description>Dextrous Carnage + Dex Despair</Description>
+		<Version>1.2.0</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>
 		<RootNamespace>DexCarn</RootNamespace>

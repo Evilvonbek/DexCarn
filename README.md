@@ -7,7 +7,7 @@ Prerequisites are now :
 - Dazzling Display    ( unchanged )
 - BAB 11              ( unchanged ) 
 
-Now includes Dex version of Cournagon Smash.
+Now includes Dex version of Cornugon Smash.
 
 Prerequisites are now :
 
