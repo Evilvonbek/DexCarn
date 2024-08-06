@@ -15,6 +15,8 @@ using BlueprintCore.Conditions.Builder.ContextEx;
 using BlueprintCore.Actions.Builder.BasicEx;
 using Kingmaker.Enums;
 using Kingmaker.Blueprints.Items.Weapons;
+using BlueprintCore.Actions.Builder.ContextEx;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
 
 namespace DexCarn
 {
@@ -75,7 +77,11 @@ namespace DexCarn
 
                     Logger.Info("Patching blueprints.");
                     //< INSERT YOUR whatever.configure() here >
+                    Logger.Info("Patching DexCarnage");
                     DextrousCarnage.Configure();
+                    Logger.Info("Patching DexDespair");
+                    DexDespair.Configure();
+                    Logger.Info("Finished Patching");
                 }
                 catch (Exception e)
                 {
@@ -114,7 +120,7 @@ namespace DexCarn
     {
         public static void Configure()
         {
-            var DexDespair = FeatureConfigurator.New("DexDespair", "524D86A7-819B-4E4D-9C4F-A27975974E11")
+            var DexDespair = FeatureConfigurator.New("Despair100Cuts", "524D86A7-819B-4E4D-9C4F-A27975974E11")
                                                      .CopyFrom(FeatureRefs.CornugonSmash, c => c is not (PrerequisiteStatValue or PrerequisiteFeature or AddInitiatorAttackWithWeaponTrigger or RecommendationHasFeature))
                                                      .SetDisplayName(LocalizationTool.GetString("DexDespair.Name"))
                                                      .SetDescription(LocalizationTool.GetString("DexDespair.Disc"))
@@ -123,38 +129,41 @@ namespace DexCarn
                                                      .AddInitiatorAttackWithWeaponTrigger(ActionsBuilder.New()
                                                           .Conditional(
                                                               ConditionsBuilder.New().CasterHasFact(BuffRefs.PiranhaStrikeBuff.Reference.Get()),
-                                                          ifTrue: ActionsBuilder.New().MeleeAttack()).Build(),
-                                                          TriggerBeforeAttack : false,
-                                                          OnlyHit : true,
-                                                          OnMiss : false,
-                                                          OnlyOnFullAttack : false,
-                                                          OnlyOnFirstAttack : false,
-                                                          OnlyOnFirstHit : false,
-                                                          CriticalHit : false,
-                                                          OnlyNatural20 : false,
-                                                          OnAttackOfOpportunity : false,
-                                                          NotCriticalHit : false,
-                                                          OnlySneakAttack : false,
-                                                          NotSneakAttack : false,
-                                                          m_WeaponType : null,
-                                                          CheckWeaponCategory : false,
-                                                          Category : WeaponCategory.UnarmedStrike,
-                                                      CheckWeaponGroup : false,
-                                                      WeaponFighterGroup : weaponfightergroup.None,
-                                                          CheckWeaponRangeType : true,
-                                                          RangeType: WeaponRangeType.MeleeNormal,
-                                                          CheckPhysicalDamageForm : false,
-                                                          DamageForm : 0,
-                                                          ReduceHPToZero : false,
-                                                          DamageMoreTargetMaxHP : false,
-                                                          CheckDistance : false,
-                                                          DistanceLessEqual: 0.0,
-                                                          AllNaturalAndUnarmed: false,
-                                                          DuelistWeapon: false,
-                                                          NotExtraAttack : false,
-                                                          OnCharge : false,
-                                                          IgnoreAutoHit : false,
-                                                          ActionsOnInitiator : false)
+                                                          ifTrue: ActionsBuilder.New().Demoralize(
+                                                                                                  buff: BuffRefs.Shaken.Reference.Get(), 
+                                                                                                  greaterBuff: BuffRefs.Frightened.Reference.Get()//,
+                                                                                                //extraEffectFeature: FeatureRefs.DisplayWeaponProwess.Reference.Get()
+                                                                                                  )).Build(),
+                                                          triggerBeforeAttack : false,
+                                                          onlyHit : true,
+                                                          onMiss : false,
+                                                          onlyOnFullAttack : false,
+                                                          onlyOnFirstAttack : false,
+                                                          onlyOnFirstHit : false,
+                                                          criticalHit : false,
+                                                          onlyNatural20 : false,
+                                                          onAttackOfOpportunity : false,
+                                                          notCriticalHit : false,
+                                                          onlySneakAttack : false,
+                                                          notSneakAttack : false,
+                                                          weaponType : null,
+                                                          checkWeaponCategory : false,
+                                                          category : WeaponCategory.UnarmedStrike,
+                                                          checkWeaponGroup : false,
+                                                          group : WeaponFighterGroup.None,
+                                                          checkWeaponRangeType : true,
+                                                          rangeType: WeaponRangeType.MeleeNormal,
+                                                          checkPhysicalDamageForm : false,
+                                                          damageForm : 0,
+                                                          reduceHPToZero : false,
+                                                          damageMoreTargetMaxHP : false,
+                                                          checkDistance : false,                                                       
+                                                          allNaturalAndUnarmed: false,
+                                                          duelistWeapon: false,
+                                                          notExtraAttack : false,
+                                                          onCharge : false,
+                                                          ignoreAutoHit : false,
+                                                          actionsOnInitiator : false)
                                                      .Configure();
 
             FeatureConfigurator.For(FeatureRefs.PiranhaStrikeFeature)
