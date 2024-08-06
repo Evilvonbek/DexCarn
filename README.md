@@ -7,6 +7,13 @@ Prerequisites are now :
 - Dazzling Display    ( unchanged )
 - BAB 11              ( unchanged ) 
 
+Now includes Dex version of Cournagon Smash.
+
+Prerequisites are now :
+
+- Persuasion 6
+- Piranaha Strike
+
 No weird behaviour ( hopefully ) and nothing needing set, just plug and slay.
 
 Special Thanks as usual to Balkoth, Kuru, Cascade and everyone else for putting up with my dumb penguin brainmush and catching my mistakes and also VS doing dumb things.
@@ -17,3 +24,7 @@ Changelog :
 
 - Added Prerequisite info to Piranha Strike
 - Added Prerequisite info to Dazzling Display
+
+1.2.0 :
+
+- Added Dex version of Cournagon Smash, along with Prerequisite Info to Piranha Strike
