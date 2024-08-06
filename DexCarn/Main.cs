@@ -131,7 +131,7 @@ namespace DexCarn
                                                               ConditionsBuilder.New().CasterHasFact(BuffRefs.PiranhaStrikeBuff.Reference.Get()),
                                                           ifTrue: ActionsBuilder.New().Demoralize(
                                                                                                   buff: BuffRefs.Shaken.Reference.Get(), 
-                                                                                                  greaterBuff: BuffRefs.Frightened.Reference.Get()//,
+                                                                                                  greaterBuff: BuffRefs.Frightened.Reference.Get()
                                                                                                 //extraEffectFeature: FeatureRefs.DisplayWeaponProwess.Reference.Get()
                                                                                                   )).Build(),
                                                           triggerBeforeAttack : false,
