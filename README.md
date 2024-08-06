@@ -12,7 +12,7 @@ Now includes Dex version of Cournagon Smash.
 Prerequisites are now :
 
 - Persuasion 6
-- Piranaha Strike
+- Piranha Strike
 
 No weird behaviour ( hopefully ) and nothing needing set, just plug and slay.
 
