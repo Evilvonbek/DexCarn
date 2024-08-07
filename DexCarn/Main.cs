@@ -132,7 +132,7 @@ namespace DexCarn
             var DexDespair = FeatureConfigurator.New("Despair100Cuts", "524D86A7-819B-4E4D-9C4F-A27975974E11")
                                  .CopyFrom(FeatureRefs.CornugonSmash, c => c is not (PrerequisiteStatValue or PrerequisiteFeature or AddInitiatorAttackWithWeaponTrigger or RecommendationHasFeature))
                                  .AddComponent(trigger)
-                                 .SetDisplayName(LocalizationTool.GetString("DexDespair,Name"))
+                                 .SetDisplayName(LocalizationTool.GetString("DexDespair.Name"))
                                  .SetDescription(LocalizationTool.GetString("DexDespair.Disc"))
                                  .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
                                  .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.SkillPersuasion, 6)
