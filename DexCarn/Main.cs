@@ -1,18 +1,26 @@
 ﻿using HarmonyLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Reflection;
 using UnityModManagerNet;
 using Kingmaker.Blueprints.JsonSystem;
 using BlueprintCore.Utils;
 using BlueprintCore.Blueprints.References;
 using BlueprintCore.Blueprints.CustomConfigurators.Classes;
-using Kingmaker.Blueprints;
-using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
 using Kingmaker.Blueprints.Classes.Prerequisites;
+using Kingmaker.UnitLogic.Mechanics.Components;
+using Kingmaker.Designers.Mechanics.Recommendations;
+using BlueprintCore.Actions.Builder;
+using BlueprintCore.Conditions.Builder;
+using BlueprintCore.Conditions.Builder.ContextEx;
+using BlueprintCore.Actions.Builder.BasicEx;
+using Kingmaker.Enums;
+using Kingmaker.Blueprints.Items.Weapons;
+using BlueprintCore.Actions.Builder.ContextEx;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
+using DexCarn.Utils;
+using Kingmaker.Blueprints;
+using TabletopTweaks.Core.Utilities;
+using Kingmaker.Designers.EventConditionActionSystem.Actions;
 
 namespace DexCarn
 {
@@ -73,7 +81,11 @@ namespace DexCarn
 
                     Logger.Info("Patching blueprints.");
                     //< INSERT YOUR whatever.configure() here >
+                    Logger.Info("Patching DexCarnage");
                     DextrousCarnage.Configure();
+                    Logger.Info("Patching DexDespair");
+                    DexDespair.Configure();
+                    Logger.Info("Finished Patching");
                 }
                 catch (Exception e)
                 {
@@ -88,14 +100,14 @@ namespace DexCarn
         public static void Configure()
         {
             var DextrousCarnage = FeatureConfigurator.New("Dextrous Carnage", "524D86A7-819B-4E4D-9C4F-A27975974E10")
-                                                     .CopyFrom(FeatureRefs.DreadfulCarnage, c => c is not (PrerequisiteStatValue or PrerequisiteFeature))
-                                                     .SetDisplayName(LocalizationTool.GetString("DextrousCarnage.Name"))
-                                                     .SetDescription(LocalizationTool.GetString("DextrousCarnage.Disc"))
-                                                     .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.Dexterity, 15)
-                                                     .AddPrerequisiteFeature(FeatureRefs.DazzlingDisplayFeature.Reference.Get())
-                                                     .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
-                                                     .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.BaseAttackBonus, 11)
-                                                     .Configure();
+                                      .CopyFrom(FeatureRefs.DreadfulCarnage, c => c is not (PrerequisiteStatValue or PrerequisiteFeature))
+                                      .SetDisplayName(LocalizationTool.GetString("DextrousCarnage.Name"))
+                                      .SetDescription(LocalizationTool.GetString("DextrousCarnage.Disc"))
+                                      .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.Dexterity, 15)
+                                      .AddPrerequisiteFeature(FeatureRefs.DazzlingDisplayFeature.Reference.Get())
+                                      .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
+                                      .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.BaseAttackBonus, 11)
+                                  .Configure();
 
             FeatureConfigurator.For(FeatureRefs.PiranhaStrikeFeature)
                 .AddToIsPrerequisiteFor(DextrousCarnage)
@@ -103,6 +115,31 @@ namespace DexCarn
 
             FeatureConfigurator.For(FeatureRefs.DazzlingDisplayFeature)
                 .AddToIsPrerequisiteFor(DextrousCarnage)
+                .Configure();
+
+        }
+    }
+
+    class DexDespair
+    {
+        public static void Configure()
+        {
+            var cs = FeatureRefs.CornugonSmash.Reference.Get();
+            var trigger = (AddInitiatorAttackWithWeaponTrigger)ObjectDeepCopier.Clone(cs.GetComponent<AddInitiatorAttackWithWeaponTrigger>());
+            var conditional = (Conditional)trigger.Action.Actions[0];
+            conditional.ConditionsChecker = ConditionsBuilder.New().CasterHasFact(BuffRefs.PiranhaStrikeBuff.Reference.Get()).Build();
+
+            var DexDespair = FeatureConfigurator.New("Despair100Cuts", "524D86A7-819B-4E4D-9C4F-A27975974E11")
+                                 .CopyFrom(FeatureRefs.CornugonSmash, c => c is not (PrerequisiteStatValue or PrerequisiteFeature or AddInitiatorAttackWithWeaponTrigger or RecommendationHasFeature))
+                                 .AddComponent(trigger)
+                                 .SetDisplayName(LocalizationTool.GetString("DexDespair.Name"))
+                                 .SetDescription(LocalizationTool.GetString("DexDespair.Disc"))
+                                 .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
+                                 .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.SkillPersuasion, 6)
+                             .Configure();
+
+            FeatureConfigurator.For(FeatureRefs.PiranhaStrikeFeature)
+                .AddToIsPrerequisiteFor(DexDespair)
                 .Configure();
 
         }
