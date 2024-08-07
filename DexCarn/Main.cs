@@ -17,6 +17,10 @@ using Kingmaker.Enums;
 using Kingmaker.Blueprints.Items.Weapons;
 using BlueprintCore.Actions.Builder.ContextEx;
 using Kingmaker.UnitLogic.Buffs.Blueprints;
+using DexCarn.Utils;
+using Kingmaker.Blueprints;
+using TabletopTweaks.Core.Utilities;
+using Kingmaker.Designers.EventConditionActionSystem.Actions;
 
 namespace DexCarn
 {
@@ -96,14 +100,14 @@ namespace DexCarn
         public static void Configure()
         {
             var DextrousCarnage = FeatureConfigurator.New("Dextrous Carnage", "524D86A7-819B-4E4D-9C4F-A27975974E10")
-                                                     .CopyFrom(FeatureRefs.DreadfulCarnage, c => c is not (PrerequisiteStatValue or PrerequisiteFeature))
-                                                     .SetDisplayName(LocalizationTool.GetString("DextrousCarnage.Name"))
-                                                     .SetDescription(LocalizationTool.GetString("DextrousCarnage.Disc"))
-                                                     .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.Dexterity, 15)
-                                                     .AddPrerequisiteFeature(FeatureRefs.DazzlingDisplayFeature.Reference.Get())
-                                                     .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
-                                                     .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.BaseAttackBonus, 11)
-                                                     .Configure();
+                                      .CopyFrom(FeatureRefs.DreadfulCarnage, c => c is not (PrerequisiteStatValue or PrerequisiteFeature))
+                                      .SetDisplayName(LocalizationTool.GetString("DextrousCarnage.Name"))
+                                      .SetDescription(LocalizationTool.GetString("DextrousCarnage.Disc"))
+                                      .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.Dexterity, 15)
+                                      .AddPrerequisiteFeature(FeatureRefs.DazzlingDisplayFeature.Reference.Get())
+                                      .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
+                                      .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.BaseAttackBonus, 11)
+                                  .Configure();
 
             FeatureConfigurator.For(FeatureRefs.PiranhaStrikeFeature)
                 .AddToIsPrerequisiteFor(DextrousCarnage)
@@ -120,51 +124,19 @@ namespace DexCarn
     {
         public static void Configure()
         {
+            var cs = FeatureRefs.CornugonSmash.Reference.Get();
+            var trigger = (AddInitiatorAttackWithWeaponTrigger)ObjectDeepCopier.Clone(cs.GetComponent<AddInitiatorAttackWithWeaponTrigger>());
+            var conditional = (Conditional)trigger.Action.Actions[0];
+            conditional.ConditionsChecker = ConditionsBuilder.New().CasterHasFact(BuffRefs.PiranhaStrikeBuff.Reference.Get()).Build();
+
             var DexDespair = FeatureConfigurator.New("Despair100Cuts", "524D86A7-819B-4E4D-9C4F-A27975974E11")
-                                                     .CopyFrom(FeatureRefs.CornugonSmash, c => c is not (PrerequisiteStatValue or PrerequisiteFeature or AddInitiatorAttackWithWeaponTrigger or RecommendationHasFeature))
-                                                     .SetDisplayName(LocalizationTool.GetString("DexDespair.Name"))
-                                                     .SetDescription(LocalizationTool.GetString("DexDespair.Disc"))
-                                                     .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
-                                                     .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.SkillPersuasion, 6)
-                                                     .AddInitiatorAttackWithWeaponTrigger(ActionsBuilder.New()
-                                                          .Conditional(
-                                                              ConditionsBuilder.New().CasterHasFact(BuffRefs.PiranhaStrikeBuff.Reference.Get()),
-                                                          ifTrue: ActionsBuilder.New().Demoralize(
-                                                                                                  buff: BuffRefs.Shaken.Reference.Get(), 
-                                                                                                  greaterBuff: BuffRefs.Frightened.Reference.Get()
-                                                                                                //extraEffectFeature: FeatureRefs.DisplayWeaponProwess.Reference.Get()
-                                                                                                  )).Build(),
-                                                          triggerBeforeAttack : false,
-                                                          onlyHit : true,
-                                                          onMiss : false,
-                                                          onlyOnFullAttack : false,
-                                                          onlyOnFirstAttack : false,
-                                                          onlyOnFirstHit : false,
-                                                          criticalHit : false,
-                                                          onlyNatural20 : false,
-                                                          onAttackOfOpportunity : false,
-                                                          notCriticalHit : false,
-                                                          onlySneakAttack : false,
-                                                          notSneakAttack : false,
-                                                          weaponType : null,
-                                                          checkWeaponCategory : false,
-                                                          category : WeaponCategory.UnarmedStrike,
-                                                          checkWeaponGroup : false,
-                                                          group : WeaponFighterGroup.None,
-                                                          checkWeaponRangeType : true,
-                                                          rangeType: WeaponRangeType.MeleeNormal,
-                                                          checkPhysicalDamageForm : false,
-                                                          damageForm : 0,
-                                                          reduceHPToZero : false,
-                                                          damageMoreTargetMaxHP : false,
-                                                          checkDistance : false,                                                       
-                                                          allNaturalAndUnarmed: false,
-                                                          duelistWeapon: false,
-                                                          notExtraAttack : false,
-                                                          onCharge : false,
-                                                          ignoreAutoHit : false,
-                                                          actionsOnInitiator : false)
-                                                     .Configure();
+                                 .CopyFrom(FeatureRefs.CornugonSmash, c => c is not (PrerequisiteStatValue or PrerequisiteFeature or AddInitiatorAttackWithWeaponTrigger or RecommendationHasFeature))
+                                 .AddComponent(trigger)
+                                 .SetDisplayName(LocalizationTool.GetString("DexDespair,Name"))
+                                 .SetDescription(LocalizationTool.GetString("DexDespair.Disc"))
+                                 .AddPrerequisiteFeature(FeatureRefs.PiranhaStrikeFeature.Reference.Get())
+                                 .AddPrerequisiteStatValue(Kingmaker.EntitySystem.Stats.StatType.SkillPersuasion, 6)
+                             .Configure();
 
             FeatureConfigurator.For(FeatureRefs.PiranhaStrikeFeature)
                 .AddToIsPrerequisiteFor(DexDespair)
